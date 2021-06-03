@@ -1,0 +1,25 @@
+.del-button {
+   position: absolute;
+   top: -52px;
+   right: -52px;
+   background: url(../../images/icons/x-icon.svg) center/58px 58px;
+   width: 63px;
+   height: 63px;
+   border: none;
+   outline: none;
+   cursor: pointer;
+}
+
+.del-button:hover {
+   opacity: 0.6;
+}
+
+@media screen and (max-width: 580px) {
+   .del-button {
+      background-size: 26px 26px;
+      width: 30px;
+      height: 30px;
+      top: -43px;
+      right: 0;
+   }
+}

@@ -1,0 +1,23 @@
+.popup__text {
+   border: none;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+   display: inline-block;
+   width: 100%;
+   padding: 7px 5px 10px;
+   margin: 0 0 20px;
+   box-sizing: border-box;
+   font-size: 14px;
+   line-height: 17px;
+}
+
+.popup__text:last-child {
+   margin: 0;
+} 
+
+.popup__text:focus {
+   outline: none;
+   border-bottom: none;
+   border-radius: 5px;
+   border: 2px solid rgb(52, 65, 247);
+   padding: 5px 3px 9px;
+} 
