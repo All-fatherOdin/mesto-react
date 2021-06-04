@@ -6,6 +6,7 @@ function DelCardPopup({card, onClose, onDelCard}) {
    function handleSubmit(e) {
       e.preventDefault()
       onDelCard(card._id)
+      onClose()
    }
 
    return(

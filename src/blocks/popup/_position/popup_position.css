@@ -1,0 +1,5 @@
+.popup_position {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}

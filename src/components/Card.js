@@ -27,7 +27,8 @@ function Card({onCardClick, handleCardLike, onDelCard, card}) {
    }
 
    function openDelCardPopup(cardInfo) {
-      onDelCard({ isOpen: true, _id: cardInfo._id });
+      onDelCard({ isOpen: true, _id: card._id });
+      console.log({ isOpen: true, _id: card })
    }
 
    function handleCardClick(cardInfo) {
