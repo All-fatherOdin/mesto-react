@@ -1,0 +1,6 @@
+.form-text-error_login{
+   color: rgb(52, 153, 247);
+}
+.form-text-error_login:last-of-type{
+   bottom: -5px;
+}

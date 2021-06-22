@@ -1,16 +1,16 @@
-import React from 'react'
-import {CurrentUserContext} from '../contexts/CurrentUserContext';
+import { useContext } from 'react'
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Card from './Card'
 
 function Main({onEditAvatar, onEditProfile, onAddPlace, cards, onDelCard, onCardClick, handleCardLike}) {
    
-   const currentUser = React.useContext(CurrentUserContext)
+   const currentUser = useContext(CurrentUserContext)
 
    function renderCards() {
-      return cards.map(({...card})=>(
+      return cards.map(({ ...card }) => (
          <Card 
             key={card._id}
-            card={{...card}} 
+            card={{ ...card }} 
             onCardClick={onCardClick}
             handleCardLike={handleCardLike}
             onDelCard ={onDelCard}

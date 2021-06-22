@@ -52,10 +52,6 @@ function App() {
     setEditAvatarPopupOpen(true);
   }
 
-  function openTooltipPopup() {
-    setTooltipPopupOpen({ isOpen: true });
-  }
-
   function handleUpdateUser({userName, about}) {
     api.changeProfile({userName, about})
     .then((userInfo) => {
@@ -118,8 +114,8 @@ function App() {
       })
       .catch((err) => {
         alert(err)
-      });
-  }, [])
+      })
+  }, [loggedIn])
 
   function handleRegister({email, password}) {
     auth.register({email, password})
@@ -130,7 +126,9 @@ function App() {
         setTooltipPopupOpen({isOpen: true, registration: true})
       }
     })
-    .catch(()=>{setTooltipPopupOpen({isOpen: true, registration: false})})
+    .catch((err) => {
+      alert(err)
+    })
   }
 
   function handleLogin({email, password}) {
@@ -145,9 +143,9 @@ function App() {
         setTooltipPopupOpen({isOpen: true, registration: false})
       }
     })
-    // .catch(() => {
-    //   setTooltipPopupOpen({isOpen: true, registration: false})
-    // })
+    .catch((err) => {
+      alert(err)
+    })
   }
 
   function handleLogout() {
@@ -159,7 +157,7 @@ function App() {
 
   function checkToken() {
     const token = localStorage.getItem('jwt')
-    if(token){
+    if(token) {
       auth.getContent(token)
       .then((res)=> {
         const {data} = res
@@ -167,6 +165,10 @@ function App() {
         setLoggedIn(true)
         history.push('/main')
         setHeaderLink('/main')
+      })
+      .catch((err) => {
+        alert(err);
+        localStorage.removeItem('jwt')
       })
     } else {
       history.push('/sign-in')
@@ -202,9 +204,7 @@ function App() {
           </Route>
           <Route path="/sign-in">
             <Login 
-            handleLogin={handleLogin}
-            setUserData={setUserData}
-            userData={userData}
+              handleLogin={handleLogin}
             />
           </Route>
           <ProtectedRoute 
@@ -218,7 +218,7 @@ function App() {
             onCardClick={setSelectedCard}
             cards={cards}
             handleCardLike={handleCardLike}
-            />
+          />
           <Route>
             {loggedIn ? <Redirect to="/main"/> : <Redirect to="/sign-in"/> }
           </Route>

@@ -18,6 +18,7 @@ function DelCardPopup({card, onClose, onDelCard}) {
          isOpen={card.isOpen}
          onClose={onClose}
          onSubmit={handleSubmit}
+         isValid={true}
       />
    )
 }

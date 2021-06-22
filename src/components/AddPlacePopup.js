@@ -1,20 +1,20 @@
-import React from 'react'
+import { useRef, useEffect } from 'react'
 import PopupWithForm from './PopupWithForm'
+import { useFormWithValidation } from '../hooks/useForm';
 
-function AddPlacePopup({onAddPlace, isOpen, onClose}) {
-
-   const pictureNameRef = React.useRef()
-   const pictureLinkRef = React.useRef()
+function AddPlacePopup({ onAddPlace, isOpen, onClose }) {
+   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+   const pictureNameRef = useRef()
+   const pictureLinkRef = useRef()
 
    function handleSubmit(e) {
       e.preventDefault();
-      onAddPlace({name: pictureNameRef.current.value, link: pictureLinkRef.current.value});
+      onAddPlace({ name: pictureNameRef.current.value, link: pictureLinkRef.current.value });
    }
 
-   React.useEffect(() => {
-      pictureNameRef.current.value = "";
-      pictureLinkRef.current.value = "";   
-   }, [isOpen])
+   useEffect(() => {
+      resetForm()
+   }, [isOpen, resetForm])
 
    return (
       <PopupWithForm
@@ -25,16 +25,38 @@ function AddPlacePopup({onAddPlace, isOpen, onClose}) {
          isOpen={isOpen} 
          onClose={onClose}
          onSubmit={handleSubmit}
+         isValid={isValid}
+         resetForm={resetForm}
          >
-         <input id="picture-name-input" type="text" name="img-name" 
-         placeholder="Название" className="popup__text popup__text_placeholder-disable" 
-         minLength="2" maxLength="30" ref={pictureNameRef} required />
-         <span className="picture-name-input-error popup__text-error">Вы пропустили это поле.</span>
+         <input  
+            type="text" 
+            name="img-name" 
+            placeholder="Название" 
+            className="popup__text" 
+            minLength="2" 
+            maxLength="30"
+            onChange={handleChange}
+            value={values["img-name"] || ""} 
+            ref={pictureNameRef} 
+            required 
+         />
+         <span className="popup__text-error">
+            {errors[["img-name"]]}
+         </span>
 
-         <input id="picture-url-input" type="url" name="img-location"
-         placeholder="Ссылка  на картинку" className="popup__text popup__text_placeholder-disable" 
-         ref={pictureLinkRef} required />
-         <span className="picture-url-input-error popup__text-error">Вы пропустили это поле.</span>
+         <input 
+            type="url" 
+            name="img-location"
+            placeholder="Ссылка на картинку" 
+            className="popup__text"
+            onChange={handleChange}
+            value={values["img-location"] || ""}  
+            ref={pictureLinkRef} 
+            required 
+            />
+         <span className="popup__text-error">
+            {errors["img-location"]}
+         </span>
       </PopupWithForm>
    )
 }

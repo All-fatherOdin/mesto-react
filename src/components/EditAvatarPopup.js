@@ -1,33 +1,44 @@
-import React from 'react'
-import PopupWithForm from './PopupWithForm'
+import { useEffect } from 'react';
+import PopupWithForm from './PopupWithForm';
+import { useFormWithValidation } from '../hooks/useForm'
 
 function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
-   const avatarRef = React.useRef('')
+   const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
 
    function handleSubmit(e) {
       e.preventDefault();
-      const avatarLink = avatarRef.current.value;
+      const avatarLink = values["img-link"];
       onUpdateAvatar({avatar: avatarLink});
       onClose();
    } 
 
-   React.useEffect(() => {
-      avatarRef.current.value = ""
-   }, [isOpen])
+   useEffect(() => {
+      resetForm()
+   }, [isOpen, resetForm])
 
    return (
          <PopupWithForm 
             name="user-gallery" 
-            id="avatar-popup" 
             title="Обновить аватар"
             buttonName="Сохранить"
             isOpen={isOpen} 
             onClose={onClose}
             onSubmit={handleSubmit}
+            isValid={isValid}
          >
-            <input id="pic-url-input" type="url" name="img-link" placeholder="Ссылка на картинку"
-            className="popup__text popup__text_placeholder-disable" ref={avatarRef} required />
-            <span className="pic-url-input-error popup__text-error">Вы пропустили это поле.</span>
+            <input 
+               type="url" 
+               name="img-link" 
+               placeholder="Ссылка на картинку"
+               className="popup__text" 
+               required
+               minLength='2'
+               value={values["img-link"] || ""}
+               onChange={handleChange} 
+               />
+            <span className="popup__text-error">
+               {errors["img-link"] || ""}
+            </span>
          </PopupWithForm>
    )
 }

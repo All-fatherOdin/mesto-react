@@ -1,30 +1,21 @@
-import React from 'react'
-import PopupWithForm from './PopupWithForm'
-import {CurrentUserContext} from '../contexts/CurrentUserContext'
+import { useContext, useEffect } from 'react';
+import PopupWithForm from './PopupWithForm';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { useFormWithValidation } from '../hooks/useForm';
 
 
 function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
-   const [name, setName] = React.useState('')
-   const [description, setDescription] = React.useState('')
-   const currentUser = React.useContext(CurrentUserContext)
-
-   function handleNameChange(e) {
-      setName(e.target.value);
-   }
-
-   function handleDescriptionChange(e) {
-      setDescription(e.target.value)
-   }
+   const currentUser = useContext(CurrentUserContext)
+   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
    function handleSubmit(e) {
       e.preventDefault();
-      onUpdateUser({userName: name, about: description});
+      onUpdateUser({userName: values["user-name"], about: values["user-about"]});
    } 
 
-   React.useEffect(() => {
-      setName(currentUser.name)
-      setDescription(currentUser.about)
-   }, [currentUser])
+   useEffect(() => {
+      resetForm()
+   }, [isOpen, resetForm])
    
    return(
       <CurrentUserContext.Provider value={currentUser}>
@@ -36,14 +27,38 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
             isOpen={isOpen} 
             onClose={onClose}
             onSubmit={handleSubmit}
+            isValid={isValid}
+            resetForm={resetForm}
          >
-            <input type="text" name="user-name" className="popup__text" 
-            minLength="2" maxLength="40" value={name} onChange={handleNameChange} required />
-            <span className="name-input-error popup__text-error">Вы пропустили это поле.</span>
+            <input 
+               type="text" 
+               name="user-name"
+               placeholder="Имя" 
+               className="popup__text" 
+               minLength="2" 
+               maxLength="40" 
+               value={values["user-name"] || ""} 
+               onChange={handleChange}
+               required
+            />
+            <span className="popup__text-error">
+               {errors["user-name"] || ""}
+            </span>
 
-            <input type="text" name="user-about" className="popup__text"
-            minLength="2" maxLength="200" value={description} onChange={handleDescriptionChange} required />
-            <span className="career-input-error popup__text-error">Вы пропустили это поле.</span>
+            <input 
+               type="text" 
+               name="user-about"
+               placeholder="О себе" 
+               className="popup__text"
+               minLength="2" 
+               maxLength="40" 
+               value={values["user-about"] || ""} 
+               onChange={handleChange} 
+               required 
+            />
+            <span className="popup__text-error">
+               {errors["user-about"] || ""}
+            </span>
          </PopupWithForm>
       </CurrentUserContext.Provider>
    )

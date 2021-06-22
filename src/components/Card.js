@@ -1,8 +1,8 @@
-import React from 'react'
+import {useContext} from 'react'
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 function Card({onCardClick, handleCardLike, onDelCard, card}) {
-   const currentUser = React.useContext(CurrentUserContext)
+   const currentUser = useContext(CurrentUserContext)
 
    const isOwn = card.owner._id === currentUser._id;
 
@@ -26,9 +26,8 @@ function Card({onCardClick, handleCardLike, onDelCard, card}) {
       handleCardClick(card)
    }
 
-   function openDelCardPopup(cardInfo) {
+   function openDelCardPopup() {
       onDelCard({ isOpen: true, _id: card._id });
-      console.log({ isOpen: true, _id: card })
    }
 
    function handleCardClick(cardInfo) {
