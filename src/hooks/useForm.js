@@ -25,7 +25,6 @@ export function useFormWithValidation(className=".popup") {
       setValues({ ...values, [name]: value });
       setErrors({ ...errors, [name]: input.validationMessage });
       setIsValid(input.closest(className).checkValidity());
-      console.log(input.closest(className).checkValidity())
    }
 
    const resetForm = useCallback(

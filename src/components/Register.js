@@ -8,7 +8,7 @@ function Register({handleRegister, changeLink}){
 
    function handleSubmit(e){
       e.preventDefault();
-      let { email, password } = values 
+      let { email, password } = values;
       handleRegister({ email, password })
       resetForm()
    }
@@ -25,7 +25,7 @@ function Register({handleRegister, changeLink}){
                name="email" 
                type="email" 
                className="register__input"
-               value={values["email"]} 
+               value={values["email"] || ""} 
                placeholder="Email" 
                onChange={handleChange}
                required
@@ -40,7 +40,7 @@ function Register({handleRegister, changeLink}){
                className="register__input" 
                minLength="4"
                maxLength="10"
-               value={values["password"]} 
+               value={values["password"] || ""} 
                placeholder="Пароль" 
                onChange={handleChange}
             />

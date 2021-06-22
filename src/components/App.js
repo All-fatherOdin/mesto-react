@@ -120,14 +120,16 @@ function App() {
   function handleRegister({email, password}) {
     auth.register({email, password})
     .then((res) => {
-      if(res){
+      if(res.data){
         const {data} = res;
         setUserData({email: data.email})
         setTooltipPopupOpen({isOpen: true, registration: true})
+      } else {
+        setTooltipPopupOpen({isOpen: true, registration: false})
       }
     })
     .catch((err) => {
-      alert(err)
+      console.log(err)
     })
   }
 
@@ -135,6 +137,7 @@ function App() {
     auth.authorize({email, password})
     .then((res) => {
       if(res.token){
+        setUserData({email: email})
         localStorage.setItem('jwt', res.token)
         setLoggedIn(true)
         history.push('/main')
@@ -144,7 +147,7 @@ function App() {
       }
     })
     .catch((err) => {
-      alert(err)
+      console.log(err)
     })
   }
 
