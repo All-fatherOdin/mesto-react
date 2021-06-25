@@ -1,20 +1,20 @@
 import { useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
-import { useFormWithValidation } from '../hooks/useForm'
+import { useFormWithValidation } from '../hooks/useForm';
 
-function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
    const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
 
    function handleSubmit(e) {
       e.preventDefault();
       const avatarLink = values["img-link"];
-      onUpdateAvatar({avatar: avatarLink});
+      onUpdateAvatar({ avatar: avatarLink });
       onClose();
    } 
 
    useEffect(() => {
-      resetForm()
-   }, [isOpen, resetForm])
+      resetForm();
+   }, [isOpen, resetForm]);
 
    return (
          <PopupWithForm 
@@ -40,7 +40,7 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
                {errors["img-link"] || ""}
             </span>
          </PopupWithForm>
-   )
+   );
 }
 
 export default EditAvatarPopup;

@@ -2,19 +2,21 @@ import { Link } from 'react-router-dom';
 import { useFormWithValidation } from '../hooks/useForm';
 
 function Register({handleRegister, changeLink}){
-   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation(".register__form");
+   const { values, handleChange, errors, isValid, resetForm } = 
+   useFormWithValidation(".register__form");
+
    const buttonStatus = isValid ? "register__button" : 
    "register__button register__button_inactive";
 
-   function handleSubmit(e){
+   function handleSubmit(e) {
       e.preventDefault();
       let { email, password } = values;
-      handleRegister({ email, password })
-      resetForm()
+      handleRegister({ email, password });
+      resetForm();
    }
 
    function changeHeaderLink() {
-      changeLink('/sign-in')
+      changeLink('/sign-in');
    }
 
    return(
@@ -48,10 +50,14 @@ function Register({handleRegister, changeLink}){
                {errors["password"] || ""}
             </span>
 
-            <button className={buttonStatus}>Зарегистрироваться</button>
+            <button className={buttonStatus}>
+               Зарегистрироваться
+            </button>
          </form>
          <div className="register__signin">
-            <p className="register__signin-text">Уже зарегистрировались?</p>
+            <p className="register__signin-text">
+               Уже зарегистрировались?
+            </p>
             <Link 
                to="/sign-in" 
                className="register__login-link" 

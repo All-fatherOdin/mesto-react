@@ -4,8 +4,8 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { useFormWithValidation } from '../hooks/useForm';
 
 
-function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
-   const currentUser = useContext(CurrentUserContext)
+function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+   const currentUser = useContext(CurrentUserContext);
    const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
    function handleSubmit(e) {
@@ -14,8 +14,8 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
    } 
 
    useEffect(() => {
-      resetForm()
-   }, [isOpen, resetForm])
+      resetForm();
+   }, [isOpen, resetForm]);
    
    return(
       <CurrentUserContext.Provider value={currentUser}>
@@ -61,7 +61,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
             </span>
          </PopupWithForm>
       </CurrentUserContext.Provider>
-   )
+   );
 }
 
 export default EditProfilePopup;

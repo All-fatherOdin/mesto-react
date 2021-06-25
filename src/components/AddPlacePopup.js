@@ -1,20 +1,21 @@
-import { useRef, useEffect } from 'react'
-import PopupWithForm from './PopupWithForm'
+import { useRef, useEffect } from 'react';
+import PopupWithForm from './PopupWithForm';
 import { useFormWithValidation } from '../hooks/useForm';
 
 function AddPlacePopup({ onAddPlace, isOpen, onClose }) {
    const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
-   const pictureNameRef = useRef()
-   const pictureLinkRef = useRef()
+   const pictureNameRef = useRef();
+   const pictureLinkRef = useRef();
 
    function handleSubmit(e) {
       e.preventDefault();
-      onAddPlace({ name: pictureNameRef.current.value, link: pictureLinkRef.current.value });
-   }
+      onAddPlace({ name: pictureNameRef.current.value, 
+         link: pictureLinkRef.current.value });
+   };
 
    useEffect(() => {
-      resetForm()
-   }, [isOpen, resetForm])
+      resetForm();
+   }, [isOpen, resetForm]);
 
    return (
       <PopupWithForm
@@ -27,7 +28,7 @@ function AddPlacePopup({ onAddPlace, isOpen, onClose }) {
          onSubmit={handleSubmit}
          isValid={isValid}
          resetForm={resetForm}
-         >
+      >
          <input  
             type="text" 
             name="img-name" 

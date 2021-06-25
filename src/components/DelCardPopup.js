@@ -1,13 +1,13 @@
-import React from 'react'
-import PopupWithForm from './PopupWithForm'
+import React from 'react';
+import PopupWithForm from './PopupWithForm';
 
-function DelCardPopup({card, onClose, onDelCard}) {
+function DelCardPopup({ card, onClose, onDelCard }) {
 
    function handleSubmit(e) {
-      e.preventDefault()
-      onDelCard(card._id)
-      onClose()
-   }
+      e.preventDefault();
+      onDelCard(card._id);
+      onClose();
+   };
 
    return(
       <PopupWithForm 

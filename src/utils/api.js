@@ -26,7 +26,7 @@ class Api {
       .then(this._checkResponse)
    }
 
-   changeProfile({userName, about}) {
+   changeProfile({ userName, about }) {
       return fetch(`${this._baseUrl}/${this._cohortId}/users/me`, {
          method: 'PATCH',
          headers: this._headers,
@@ -38,7 +38,7 @@ class Api {
       .then(this._checkResponse)
    }
 
-   addCard({cardName, link}) {
+   addCard({ cardName, link }) {
       return fetch(`${this._baseUrl}/${this._cohortId}/cards`, {
          method: 'POST',
          headers: this._headers,
@@ -76,12 +76,16 @@ class Api {
       })
       .then(this._checkResponse)
    }
-
 }
 
-const api = new Api({baseUrl: 'https://mesto.nomoreparties.co/v1', cohortId: 'cohort-22', 
-                                 token: '3c946ec2-c7fc-48d8-9469-bc7da07a0d23', headers: {authorization: '3c946ec2-c7fc-48d8-9469-bc7da07a0d23',
-                                 'Content-Type': 'application/json'}
-                              });
+const api = new Api({
+   baseUrl: 'https://mesto.nomoreparties.co/v1', 
+   cohortId: 'cohort-22', 
+   token: '3c946ec2-c7fc-48d8-9469-bc7da07a0d23', 
+   headers: {
+      authorization: '3c946ec2-c7fc-48d8-9469-bc7da07a0d23',
+      'Content-Type': 'application/json'
+   }
+});
 
 export default api;

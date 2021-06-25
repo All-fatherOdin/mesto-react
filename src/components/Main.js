@@ -1,10 +1,11 @@
-import { useContext } from 'react'
+import { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import Card from './Card'
+import Card from './Card';
 
-function Main({onEditAvatar, onEditProfile, onAddPlace, cards, onDelCard, onCardClick, handleCardLike}) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, 
+   cards, onDelCard, onCardClick, handleCardLike }) {
    
-   const currentUser = useContext(CurrentUserContext)
+   const currentUser = useContext(CurrentUserContext);
 
    function renderCards() {
       return cards.map(({ ...card }) => (
@@ -22,18 +23,39 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, cards, onDelCard, onCard
       <>
       <main className="content">
          <section className="profile">
-            <button onClick={onEditAvatar} type="button" className="profile__avatar-button">
-               <img className="profile__avatar" alt={currentUser.name} 
-               style={{background: `url(${currentUser.avatar})center/cover`}} />
+            <button 
+               onClick={onEditAvatar} 
+               type="button" 
+               className="profile__avatar-button"
+            >
+               <img 
+                  className="profile__avatar" 
+                  alt={currentUser.name} 
+                  style={{background: `url(${currentUser.avatar})center/cover`}} 
+               />
             </button>
             <div className="profile__info">
                <div className="profile__container">
-                  <h1 className="profile__name">{currentUser.name}</h1>
-                  <button onClick={onEditProfile} type="button" className="profile__edit-button"></button>
+                  <h1 className="profile__name">
+                     { currentUser.name }
+                  </h1>
+                  <button 
+                     onClick={onEditProfile} 
+                     type="button" 
+                     className="profile__edit-button"
+                  >
+                  </button>
                </div>
-               <p className="profile__career">{currentUser.about}</p>
+               <p className="profile__career">
+                  { currentUser.about }
+               </p>
             </div>
-            <button onClick={onAddPlace} type="button" className="profile__add-button"></button>
+            <button 
+               onClick={onAddPlace} 
+               type="button" 
+               className="profile__add-button"
+            >
+            </button>
          </section>
       </main>
       

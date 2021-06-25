@@ -4,17 +4,17 @@ import Main from './Main';
 import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
-import {CurrentUserContext} from '../contexts/CurrentUserContext'
-import EditProfilePopup from './EditProfilePopup'
-import EditAvatarPopup from './EditAvatarPopup'
-import AddPlacePopup from './AddPlacePopup'
-import DelCardPopup from './DelCardPopup'
-import Login from './Login'
-import Register from './Register'
-import InfoTooltip from './InfoTooltip'
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
+import DelCardPopup from './DelCardPopup';
+import Login from './Login';
+import Register from './Register';
+import InfoTooltip from './InfoTooltip';
 import { Redirect, Route, Switch, useHistory } from 'react-router';
 import ProtectedRoute from './ProtectedRoute';
-import * as auth from '../auth'
+import * as auth from '../auth';
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -30,7 +30,6 @@ function App() {
   const [headerLink, setHeaderLink] = useState('/sign-in');
   const history = useHistory();
 
-
   function closeAllPopups() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
@@ -38,19 +37,19 @@ function App() {
     setSelectedCard({ isOpen: false });
     setSelectedDelCard({ isOpen: false });
     setTooltipPopupOpen({ isOpen: false })
-  }
+  };
 
   function openProfilePopup() {
     setEditProfilePopupOpen(true);
-  }
+  };
 
   function openNewCardPopup() {
     setAddPlacePopupOpen(true);
-  }
+  };
 
   function openAvatarPopup() {
     setEditAvatarPopupOpen(true);
-  }
+  };
 
   function handleUpdateUser({userName, about}) {
     api.changeProfile({userName, about})
@@ -61,7 +60,7 @@ function App() {
     .catch((err) => {
       alert(err)
     });
-  }
+  };
 
   function handleUpdateAvatar({avatar}) {
     api.changeAvatar(avatar)
@@ -71,7 +70,7 @@ function App() {
     .catch((err) => {
       alert(err)
     });
-  }
+  };
 
   function handleCardDelete(_id) {
     api.deleteCard(_id)
@@ -81,18 +80,18 @@ function App() {
     .catch((err) => {
       alert(err)
     });
-  }
+  };
 
   function handleAddPlaceSubmit(card) {
-    api.addCard({cardName: card.name, link: card.link})
+    api.addCard({ cardName: card.name, link: card.link })
     .then((newCard) => {
-      setCards([newCard, ...cards])
-      closeAllPopups()
+      setCards([newCard, ...cards]);
+      closeAllPopups();
     })
     .catch((err) => {
-      alert(err)
+      alert(err);
     });
-  }
+  };
 
   function handleCardLike(cardInfo) {
     const isLiked = cardInfo.likes.some(user => user._id === currentUser._id);
@@ -101,87 +100,87 @@ function App() {
       setCards((state) => state.map((card) => card._id === cardInfo._id ? newCard : card));
     })
     .catch((err) => {
-      alert(err)
+      alert(err);
     });
-  }
+  };
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), 
     api.getCardsInfo()])
       .then(([userInfo, cardsInfo]) => {
-        setCurrentUser(userInfo)
+        setCurrentUser(userInfo);
         setCards(cardsInfo);
       })
       .catch((err) => {
-        alert(err)
+        alert(err);
       })
-  }, [loggedIn])
+  }, [loggedIn]);
 
   function handleRegister({email, password}) {
     auth.register({email, password})
     .then((res) => {
       if(res.data){
         const {data} = res;
-        setUserData({email: data.email})
-        setTooltipPopupOpen({isOpen: true, registration: true})
+        setUserData({ email: data.email })
+        setTooltipPopupOpen({ isOpen: true, registration: true });
       } else {
-        setTooltipPopupOpen({isOpen: true, registration: false})
+        setTooltipPopupOpen({ isOpen: true, registration: false });
       }
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
     })
   }
 
-  function handleLogin({email, password}) {
-    auth.authorize({email, password})
+  function handleLogin({ email, password }) {
+    auth.authorize({ email, password })
     .then((res) => {
       if(res.token){
-        setUserData({email: email})
-        localStorage.setItem('jwt', res.token)
-        setLoggedIn(true)
-        history.push('/main')
-        setHeaderLink('/main')
+        setUserData({ email: email });
+        localStorage.setItem('jwt', res.token);
+        setLoggedIn(true);
+        history.push('/main');
+        setHeaderLink('/main');
       } else {
-        setTooltipPopupOpen({isOpen: true, registration: false})
+        setTooltipPopupOpen({ isOpen: true, registration: false });
       }
     })
     .catch((err) => {
-      console.log(err)
-    })
-  }
+      console.log(err);
+    });
+  };
 
   function handleLogout() {
-    history.push('/sign-in')
-    setLoggedIn(false)
-    setUserData({email: ''})
-    localStorage.removeItem('jwt')
+    history.push('/sign-in');
+    setLoggedIn(false);
+    setUserData({ email: '' });
+    localStorage.removeItem('jwt');
   }
 
   function checkToken() {
-    const token = localStorage.getItem('jwt')
-    if(token) {
+    const token = localStorage.getItem('jwt');
+    if (token) {
       auth.getContent(token)
       .then((res)=> {
-        const {data} = res
-        setUserData({email: data.email})
-        setLoggedIn(true)
-        history.push('/main')
-        setHeaderLink('/main')
+        const { data } = res;
+        setUserData({ email: data.email });
+        setLoggedIn(true);
+        history.push('/main');
+        setHeaderLink('/main');
       })
       .catch((err) => {
         alert(err);
-        localStorage.removeItem('jwt')
+        localStorage.removeItem('jwt');
       })
     } else {
-      history.push('/sign-in')
-      setHeaderLink('/sign-in')
-    }
-  }
+      history.push('/sign-in');
+      setHeaderLink('/sign-in');
+    };
+  };
 
   useEffect(() => {
-    checkToken()
-  }, [])
+    checkToken();
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

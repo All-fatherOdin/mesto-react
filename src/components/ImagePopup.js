@@ -1,21 +1,17 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 
-function ImagePopup({card, onClose}) {
+function ImagePopup({ card, onClose }) {
    const { isOpen, name, src } = card;
    const className = isOpen ? "layout layout_active" : "layout";
 
    function closePopupOverlay(e) {
-      if (e.target.classList.contains("layout")) {
-         onClose()
-      }
+      if (e.target.classList.contains("layout")) onClose();
    }
 
    useEffect(() => {
-      if(!isOpen) return;
+      if (!isOpen) return;
       const handleEscClose = (e) => {
-         if (e.key === "Escape") {
-            onClose()
-         }
+         if (e.key === "Escape") onClose()
       };
       document.addEventListener("keydown", handleEscClose);
       return () => {

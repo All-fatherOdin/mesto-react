@@ -5,11 +5,11 @@ function Login({ handleLogin }) {
    const buttonStatus = isValid ? "login__button" : 
    "login__button login__button_inactive";
 
-   function handleSubmit(e){
+   function handleSubmit(e) {
       e.preventDefault();
-      const { email, password } = values 
-      handleLogin({ email, password })
-      resetForm()
+      const { email, password } = values; 
+      handleLogin({ email, password });
+      resetForm();
    }
 
    return(
@@ -27,7 +27,7 @@ function Login({ handleLogin }) {
                required
             />
             <span className="form-text-error form-text-error_login">
-               {errors["email"] || ""}
+               { errors["email"] || "" }
             </span>
 
             <input 
@@ -41,7 +41,7 @@ function Login({ handleLogin }) {
                onChange={handleChange}
             />
             <span className="form-text-error form-text-error_login">
-               {errors["password"] || ""}
+               { errors["password"] || "" }
             </span>
 
             <button className={buttonStatus}>Войти</button>
@@ -50,4 +50,4 @@ function Login({ handleLogin }) {
    ) 
 }
 
-export default Login
+export default Login;
